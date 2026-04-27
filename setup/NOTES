@@ -1,0 +1,51 @@
+I used two types of servos for this build: 
+
+HS-785HB Winch Servos - https://www.servocity.com/hs-785hb-servo/
+	Stall current of 1800mA
+	Operating voltage 5V
+	Max Torque 185 oz * in
+	4 turn servo
+	PWM Range 600 - 2400 microseconds
+	1.57 degree per microsecond
+
+HS-645MG Torque Servos - https://www.servocity.com/hs-645mg-servo/
+	Stall current of 2500mA
+	Operating voltage 5V
+	Max torque 135 oz * in
+	180 degree servo
+	PWM Range 600 - 2400 microseconds
+	0.1 degree per microsecond
+
+My favorite way to ensure a consistent and stable voltage is to use a 3S lipo.
+ If you don't have any 3S LiPos, it is important to 
+buy a balance charger as well. If you are unfamiliar with LiPos and the safety requirements, please
+check out the following resource. 
+
+Here is a link to a reputable LiPo distributor. If you don't have a balance charger, you will also 
+need one to safely charge and discharge your LiPo batteries
+
+Battery - https://hobbyking.com/en_us/turnigy-heavy-duty-2200mah-3s-60c-lipo-pack-w-xt60-1.html
+Charger - https://hobbyking.com/en_us/isdt-air8-battair-500w-20a-smart-charger-1-8s-bluetooth-app-control-lipo-li-ion-life-ulihv-nimh-pb-battery-balance-charger-discharger.html
+
+When using a 3S LiPo, you will need to step down the 12V battery supply down to the 5V operating
+voltage of your servos before you can power your servo driver. For this, I like to use a waterproof 
+transformer. 
+
+Here is a link to one such product on amazon - https://www.amazon.com/dp/B08B4M1LXM/
+
+For a more powerful system you can use - https://www.amazon.com/Regulator-Converter-12V-Waterproof-Transformer/dp/B089M5R3NJ/
+
+To calculate how much power (measured in watts) you can multiply 5 volts (operating voltage) times the sum
+of the stall current in all of your actuators. For instance, using 10 x HS-785 HB Winch servos with a stall
+current of 1800mA yields a total current draw of 18 A or 18000mA. Multiplying this by 5 yields a system that 
+can draw up to 90 W of power in the worst case scenario. It is prudent to leave some extra power budget for 
+the control system. A raspberry Pi model 5 B will draw about 15 W of power (5V x 3A). so for this system, 
+using a transformer that can supply 105 W or more would be the best choice. 
+
+
+Programming: 
+
+determined experimentally - 60 degrees in 3 seconds is maximum rotational speed of servos as expected due to torque capabilities and inertia of arm in most used configurations
+
+I use a for loop to track how fast each individual servo is turning and limit motion based on a maximum safe speed that I determined. This maximum safe speed is based on a 
+few different things, including servo power and robot geometry. 
