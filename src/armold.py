@@ -19,6 +19,7 @@ class Arm():
     \n\tarm.shutdown(): Terminate hardware/software connection
     """
 
+
     def __init__(self):
         """
         Create an Arm() with N=6 degrees of freedom. 
@@ -37,6 +38,7 @@ class Arm():
         
         self.actuators = Servo()    # Main control object
         self.pose()                 # Send hardware to zero position
+
 
     def pose(self):
         """
@@ -57,6 +59,7 @@ class Arm():
         # print(f"Sending arm to {self.angles}")        # enable angle logging
         for i, e in enumerate(self.angles):
             self.actuators.setServoAngle(i, e)
+
 
     def shutdown(self): 
         """
