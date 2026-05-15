@@ -1,5 +1,5 @@
 """
-Maxx Ibarra (ME25)
+Maxx Ibarra (Caltech BSME25)
 Arm Robot Control
 2-1-2026
 """

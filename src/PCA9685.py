@@ -2,8 +2,8 @@
 PCA9685 Servo Driver Module
 Courtesy of Freenove Robot Dog Kit for Raspberry Pi
 
-Unmodified file
-8-29-2025
+Some modifications to the code by Maxx Ibarra
+5-15-2026
 """
 #!/usr/bin/python
 
@@ -55,7 +55,6 @@ class PCA9685:
     prescaleval -= 1.0
     prescale = math.floor(prescaleval + 0.5)
 
-
     oldmode = self.read(self.__MODE1);
     newmode = (oldmode & 0x7F) | 0x10        # sleep
     self.write(self.__MODE1, newmode)        # go to sleep
@@ -75,8 +74,24 @@ class PCA9685:
     self.setPWM(channel,0,duty)
     
   def setServoPulse(self, channel, pulse):
-    "Sets the Servo Pulse,The PWM frequency must be 50HZ"
-    pulse = pulse*4096/20000        #PWM frequency is 50HZ,the period is 20000 us
+    """
+    Takes an input servo channel and a pulsewidth measured in seconds to 
+    control and RC servo via the channels on a PCA 9685 servo driver
+
+    Arguments:s
+      channel (int): a number 0 through 15 indicating which of 16 servo ports
+        send the active signal to. 
+      pulse (int): a number of seconds between 0 and 0.02 indicating the 
+        duty cycle for the channel
+  
+    Returns: 
+      None
+    """
+
+    pulse = pulse*4096/0.02     # PWM frequency is 50 HZ,the period is 20000 us
+    # The resolution is 12 bit, meaning 4096 possible divisions from 0 to 0.02s
+    # Data comes in with units of seconds.
+  
     self.setPWM(channel, 0, int(pulse))
 
 if __name__=='__main__':
